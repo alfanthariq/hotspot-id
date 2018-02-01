@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="myPref">
+    <SwitchPreference
+        android:key="isSchedulerOn"
+        android:title="Use hotspot scheduler"
+        android:defaultValue="false"
+        android:textColor="@color/colorAccent"/>
+
+    <PreferenceCategory
+        android:title="Daily"
+        android:key="pref_cat1">
+        <SwitchPreference
+            android:key="isScheduleOp1"
+            android:title="Turn on hotspot every day at hh:mm"
+            android:defaultValue="false"
+            android:summary="Your hotspot will turn on everyday \nat specified time"/>
+        <SwitchPreference
+            android:key="isScheduleOp2"
+            android:title="Turn off hotspot every day at hh:mm"
+            android:defaultValue="false"
+            android:summary="Your hotspot will turn off everyday \nat specified time"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="In Case"
+        android:key="pref_cat2">
+        <SwitchPreference
+            android:key="isScheduleOp3"
+            android:title="Turn off hotspot in x minute"
+            android:defaultValue="false"
+            android:summary="Your hotspot will turn off automatically \nin specified minutes after turn on"/>
+        <SwitchPreference
+            android:key="isScheduleOp4"
+            android:title="Turn off hotspot when battery at x%"
+            android:defaultValue="false"
+            android:summary="Your hotspot will turn off automatically \nwhen your battery reach specified level"/>
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="isScheduleOp5"
+            android:title="Turn off mobile data automatically"
+            android:summary="Your mobile data will turn off automatically \nwhen hotspot turn off (root phone only)"/>
+    </PreferenceCategory>
+</PreferenceScreen>

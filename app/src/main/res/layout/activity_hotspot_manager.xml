@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:float="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.alfanthariq.hotspotid.HotspotManager">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar2"
+        android:elevation="30dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mobile Hotspot Setting"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="70"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+
+        <com.rey.material.widget.EditText
+            android:id="@+id/edSSID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="SSID"
+            app:et_labelEnable="true"
+            app:et_dividerColor="@color/colorAccent"
+            app:et_dividerHeight="1dp"/>
+
+        <com.jaredrummler.materialspinner.MaterialSpinner
+            android:id="@+id/spPwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:ms_arrow_tint="@color/colorAccent"/>
+
+        <com.rey.material.widget.EditText
+            android:id="@+id/edPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            app:et_labelEnable="true"
+            app:et_dividerColor="@color/colorAccent"
+            app:et_dividerHeight="1dp"/>
+
+        <com.rey.material.widget.CheckBox
+            style="@style/Material.Drawable.CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show password"
+            android:layout_marginTop="10dp"
+            app:cbd_strokeColor="@color/colorAccent"
+            app:cbd_tickColor="@color/colorPrimary"
+            android:id="@+id/cbShowPwd"/>
+
+    </LinearLayout>
+
+    <com.rey.material.widget.Button
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:background="@color/colorAccent"
+        android:textColor="@color/white"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="20dp"
+        app:rd_enable="true"
+        style="@style/MenuItemRippleStyle"
+        android:id="@+id/btnSave"
+        android:text="Save Change"/>
+</LinearLayout>
