@@ -10,6 +10,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.splach_activity);
         // Start home activity
         startActivity(new Intent(SplashActivity.this, IntroActivity.class));
         // close splash activity
