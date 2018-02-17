@@ -60,7 +60,7 @@ public class UnCaughtException implements UncaughtExceptionHandler {
             message.append("Version: ").append(pi.versionName).append('\n');
             message.append("Package: ").append(pi.packageName).append('\n');
         } catch (Exception e) {
-            Log.e("CustomExceptionHandler", "Error", e);
+            //Log.e("CustomExceptionHandler", "Error", e);
             message.append("Could not get Version information for ").append(
                     context.getPackageName());
         }
@@ -101,12 +101,12 @@ public class UnCaughtException implements UncaughtExceptionHandler {
             printWriter.close();
             report.append('\n');
             report.append("**** End of current Report ***");
-            Log.e(UnCaughtException.class.getName(),
-                    "Error while sendErrorMail" + report);
+            //Log.e(UnCaughtException.class.getName(),
+                    //"Error while sendErrorMail" + report);
             sendErrorMail(report);
         } catch (Throwable ignore) {
-            Log.e(UnCaughtException.class.getName(),
-                    "Error while sending error e-mail", ignore);
+            //Log.e(UnCaughtException.class.getName(),
+                    //"Error while sending error e-mail", ignore);
         }
     }
 

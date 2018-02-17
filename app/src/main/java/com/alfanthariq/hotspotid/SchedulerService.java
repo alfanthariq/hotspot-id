@@ -34,6 +34,8 @@ public class SchedulerService extends Service {
     int timeLimit, batteryLevel, currBattLevel, minuteRunning;
     WifiApManager wifiApManager;
     WifiConfiguration wifiConfig;
+    public static final String BROADCAST_ACTION = "com.alfanthariq.hotspotid.SchedulerService";
+    Intent intent;
 
     @Override
     public void onCreate() {
@@ -42,6 +44,8 @@ public class SchedulerService extends Service {
                 Process.THREAD_PRIORITY_BACKGROUND);
         // start the new handler thread
         thread.start();
+
+        intent = new Intent(BROADCAST_ACTION);
 
         mServiceLooper = thread.getLooper();
         // start the service using the background handler
@@ -123,6 +127,12 @@ public class SchedulerService extends Service {
         }
     };
 
+    private void updateUI(Boolean status) {
+        intent.putExtra("wifiStatus", status);
+        sendBroadcast(intent);
+        //stopService(intent);
+    }
+
     // Object responsible for
     private final class ServiceHandler extends Handler {
 
@@ -151,7 +161,9 @@ public class SchedulerService extends Service {
                     int scMin = Integer.parseInt ( time[1].trim() );
 
                     if (scHour==hour && scMin==minute) {
-                        wifiApManager.setWifiApEnabled(wifiConfig, true);
+                        if (wifiApManager.setWifiApEnabled(wifiConfig, true)) {
+                            updateUI(true);
+                        }
                     }
                 }
 
@@ -161,19 +173,25 @@ public class SchedulerService extends Service {
                     int scMin = Integer.parseInt ( time[1].trim() );
 
                     if (scHour==hour && scMin==minute) {
-                        wifiApManager.setWifiApEnabled(wifiConfig, false);
+                        if (wifiApManager.setWifiApEnabled(wifiConfig, false)){
+                            updateUI(false);
+                        }
                     }
                 }
 
                 if (isScheduleOp3) {
                     if (timeLimit==minuteRunning) {
-                        wifiApManager.setWifiApEnabled(wifiConfig, false);
+                        if (wifiApManager.setWifiApEnabled(wifiConfig, false)){
+                            updateUI(false);
+                        }
                     }
                 }
 
                 if (isScheduleOp4) {
                     if (batteryLevel==currBattLevel) {
-                        wifiApManager.setWifiApEnabled(wifiConfig, false);
+                        if (wifiApManager.setWifiApEnabled(wifiConfig, false)){
+                            updateUI(false);
+                        }
                     }
                 }
             }
@@ -188,6 +206,7 @@ public class SchedulerService extends Service {
     public void onDestroy(){
         loop = false;
         mNotificationManager.cancel(notifyID);
+        //stopService(intent);
         super.onDestroy();
     }
 }

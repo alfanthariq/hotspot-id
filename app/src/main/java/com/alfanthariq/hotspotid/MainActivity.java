@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     private double graphLastXValue = 5d;
     private LineGraphSeries<DataPoint> mSeries;
     private GraphView graph;
+    private Intent intent;
 
     int versionCode = BuildConfig.VERSION_CODE;
     String versionName = BuildConfig.VERSION_NAME;
@@ -207,6 +208,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (wifiApManager.isWifiApEnabled()) {
+                rippleBackground.startRippleAnimation();
+                //Toast.makeText(MainActivity.this, "Enable hotspot", Toast.LENGTH_SHORT).show();
+                startService(new Intent(MainActivity.this, MainService.class));
+                Calendar calendar = Calendar.getInstance(Locale.getDefault());
+                startTime = calendar.getTime();
+                startTimer();
+                startTimerSpeed();
+            } else {
+                rippleBackground.stopRippleAnimation();
+                //Toast.makeText(MainActivity.this, "Disable hotspot", Toast.LENGTH_SHORT).show();
+                stopService(new Intent(MainActivity.this, MainService.class));
+                txtConnDev.setText(Integer.toString(0));
+                txtMinutes.setText(Integer.toString(0));
+                txtSeconds.setText(Integer.toString(0));
+                stopTimer();
+                stopTimerSpeed();
+            }
+        }
+    };
+
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -240,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
                     input.close();
                 }
             } catch (IOException e) {
-                Log.e("", "Error while downloading image.");
+                //Log.e("", "Error while downloading image.");
             }
             return null;
         }
@@ -427,6 +452,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         mDrawer.setSelection(7);
+        mDrawer.closeDrawer();
     }
 
     private void setupViewpager() {
@@ -496,6 +522,9 @@ public class MainActivity extends AppCompatActivity {
     public void onResume()
     {
         super.onResume();
+
+        registerReceiver(broadcastReceiver, new IntentFilter(
+                SchedulerService.BROADCAST_ACTION));
 
         if (wifiApManager.isWifiApEnabled()) {
             rippleBackground.startRippleAnimation();
